@@ -1,0 +1,96 @@
+There are 5 services:
+1. Hotel-Core
+2. Webbeds
+3. Hotelbeds (HBS)
+4. Travelgate (TGX)
+5. Integrator-Framework (IF)
+
+In Golang write code to:
+
+1. backup response from Hotel-Core service to "logs/hotel_core_syspar_backup.txt":
+```
+curl -X \
+ GET 'http://hotel-core-be-svc.prod-hotel-cluster.tiket.com/tix-hotel-core/systemParameters/67ad902ff03c5b0001e2c060' \
+ -H 'Accept: application/json' \
+ -H 'storeId: TIKETCOM' \
+ -H 'channelId: SWAGGER' \
+ -H 'requestId: get-syspar' \
+ -H 'serviceId: gateway' \
+ -H 'username: script' \
+ -H 'X-Account-Id: 0' \
+ -H 'lang: en'
+```
+
+2. backup response from Webbeds service to "logs/webbeds_syspar_backup.txt":
+```
+curl -X \
+  'GET' 'http://hotel-webbeds-sync-be-svc.prod-hotel-cluster.tiket.com/tix-hotel-webbeds-sync/system-parameters/67ac3cb28b59212cab0a0624' \
+  -H 'accept: */*' \
+  -H 'X-Store-Id: TIKETCOM' \
+  -H 'X-Channel-Id: WEB' \
+  -H 'X-Request-Id: get-syspar' \
+  -H 'X-Service-Id: LOGIN' \
+  -H 'X-Reseller-Id: 1' \
+  -H 'X-Identity: Aq2i181AWSx' \
+  -H 'X-Account-Id: 1' \
+  -H 'X-Username: script' \
+  -H 'X-Business-Id: 1' \
+  -H 'X-Login-Media: logInMedia' \
+  -H 'Accept-Language: id' \
+  -H 'X-Currency: IDR' \
+  -H 'X-Forwarded-For: 127.0.0' \
+  -H 'True-Client-Ip: 127.0.0'
+```
+
+3. backup response from Hotelbeds service to "logs/hotelbeds_syspar_backup.txt":
+```
+curl -X \
+ GET 'http://hotel-hotelbeds-sync-svc.prod-hotel-cluster.tiket.com/tix-hotel-hotelbeds-sync/systemParameters/67ac3bb22a12650001994c75'\
+ -H 'accept: */*' \
+ -H 'channelId: WEB' \
+ -H 'requestId: get-syspar' \
+ -H 'serviceId: SWAGGER' \
+ -H 'storeId: TIKETCOM' \
+ -H 'username: script'
+ ```
+
+4. backup response from TGX service to "logs/travelgate_syspar_backup.txt":
+```
+curl -X \
+  'GET' 'http://hotel-travelgate-sync-be-svc.prod-hotel-cluster.tiket.com/tix-hotel-travelgate-sync/system-parameters/67a1d66ba9a0a57f92048c66' \
+  -H 'accept: */*' \
+  -H 'X-Store-Id: TIKETCOM' \
+  -H 'X-Channel-Id: WEB' \
+  -H 'X-Request-Id: get-syspar' \
+  -H 'X-Service-Id: LOGIN' \
+  -H 'X-Reseller-Id: 1' \
+  -H 'X-Identity: Aq2i181AWSx' \
+  -H 'X-Account-Id: 1' \
+  -H 'X-Username: script' \
+  -H 'X-Business-Id: 1' \
+  -H 'X-Login-Media: logInMedia' \
+  -H 'Accept-Language: id' \
+  -H 'X-Currency: IDR' \
+  -H 'X-Forwarded-For: 127.0.0' \
+  -H 'True-Client-Ip: 127.0.0'
+```
+
+5. backup response from IF service to "logs/IF_syspar_backup.txt":
+```
+curl -X \
+ GET 'http://hotel-integrator-framework-admin-svc.prod-hotel-cluster.tiket.com/tix-hotel-integrator-framework/system-parameter/67ad5e6a1dc42d0001294389' \
+ -H 'accept: */*' \
+ -H 'channelId: WEB' \
+ -H 'currency: IDR' \
+ -H 'customerSessionId: d41d8cd98f00b204e9800998ecf8427e' \
+ -H 'isVerifiedPhoneNumber: false' \
+ -H 'lang: en' \
+ -H 'requestId: get-syspar' \
+ -H 'serviceId: gateway' \
+ -H 'storeId: TIKETCOM' \
+ -H 'true-client-ip: 192.168.1.1' \
+ -H 'user-agent: Chrome' \
+ -H 'username: script' \
+ -H 'vendor: '' \
+ -H 'x-forwarded-host: 192.168.1.1'
+```
