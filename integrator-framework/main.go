@@ -4,12 +4,13 @@ import (
 	"encoding/csv"
 	"fmt"
 	"os"
+	"strings"
 )
 
 func main() {
 	basePath := "/Users/melvinismanto/tiket/tiket-go/TIX-HOTEL-INVENTORY-SCRIPT/resource/"
-	inputFile := basePath + "20250620 New All Ordered Rooms 15.37.24.csv"
-	outputFile := basePath + "IF_new_blacklist_rollout.csv"
+	inputFile := basePath + "integrator-framework-new-list.csv"
+	outputFile := basePath + "IF_new_blacklist_rollout_v2.csv"
 
 	// Open input CSV
 	f, err := os.Open(inputFile)
@@ -29,7 +30,7 @@ func main() {
 	}
 
 	// Validate header
-	expected := []string{"room_id", "vendor", "room_supplier_id", "hotel_vendor_id"}
+	expected := []string{"hotelId", "vendor", "roomId"}
 	for i, h := range expected {
 		if header[i] != h {
 			fmt.Printf("Unexpected header at column %d: got %s, want %s\n", i, header[i], h)
@@ -39,6 +40,7 @@ func main() {
 
 	// Track hotel_vendor_id seen for HOTEL blacklist
 	seenHotelVendorIDs := make(map[string]bool)
+	allVendors := make(map[string]struct{})
 
 	// Prepare output rows
 	var output [][]string
@@ -51,9 +53,19 @@ func main() {
 			break
 		}
 
-		vendor := row[1]
+		vendor := strings.ToUpper(row[1])
 		roomSupplierID := row[2]
-		hotelVendorID := row[3]
+		hotelVendorID := row[0]
+
+		if vendor == "" || roomSupplierID == "" || hotelVendorID == "" {
+			continue
+		}
+
+		if vendor == "TIKET" {
+			continue
+		}
+
+		allVendors[vendor] = struct{}{}
 
 		// If hotelVendorID not seen, add HOTEL blacklist row
 		if !seenHotelVendorIDs[vendor+hotelVendorID] {
@@ -88,4 +100,14 @@ func main() {
 	if err := writer.Error(); err != nil {
 		fmt.Println("CSV write error:", err)
 	}
+
+	// append all vendors
+	allVendorString := ""
+	for key := range allVendors {
+		allVendorString += "," + key
+	}
+	if allVendorString != "" {
+		allVendorString = allVendorString[1:] // remove the first comma
+	}
+	fmt.Println("all vendors : " + allVendorString)
 }
