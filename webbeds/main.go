@@ -64,8 +64,12 @@ func readCSVAndConstructRollout(filename string, vendorFilter string) (WebbedsRo
 			continue
 		}
 
-		hotelVendorID := record[headerIndex["hotel_vendor_id"]]
+		hotelVendorID := record[headerIndex["property_supplier_id"]]
 		roomSupplierID := record[headerIndex["room_supplier_id"]]
+
+		if hotelVendorID == "" || roomSupplierID == "" {
+			continue
+		}
 
 		blacklisted[hotelVendorID] = append(blacklisted[hotelVendorID], roomSupplierID)
 	}
@@ -104,10 +108,10 @@ func unique(input []string) []string {
 func main() {
 	// File paths
 	basePath := "/Users/melvinismanto/tiket/tiket-go/TIX-HOTEL-INVENTORY-SCRIPT/resource/"
-	jsonFile := basePath + "hotelbeds_original_rollout.json"
-	csvFile := basePath + "20250620 New All Ordered Rooms 15.37.24.csv"
-	vendorFilter := "HOTELBEDS"
-	outputFile := basePath + strings.ToLower(vendorFilter) + "_merged_rollout.json"
+	jsonFile := basePath + "webbeds_original_rollout.json"
+	csvFile := basePath + "new_webbeds.csv"
+	vendorFilter := "webbeds"
+	outputFile := basePath + strings.ToLower(vendorFilter) + "_merged_rollout_v2.json"
 
 	original, err := readOriginalRollout(jsonFile)
 	if err != nil {
