@@ -1,9 +1,11 @@
 package main
 
-import "github.com/tiket/TIX-HOTEL-INVENTORY-SCRIPT/hotel_core/merge_csv"
+import (
+	room_grouping_sync_queue_non_unique "github.com/tiket/TIX-HOTEL-INVENTORY-SCRIPT/hotel_core/room-grouping-sync-queue-non-unique"
+)
 
 func main() {
 	// bulk_merge_vendor.FindSlowHotelMerge()
 	// master_query.FindRoomGroupingKey()
-	merge_csv.MergeCsv()
+	room_grouping_sync_queue_non_unique.RunScript()
 }
