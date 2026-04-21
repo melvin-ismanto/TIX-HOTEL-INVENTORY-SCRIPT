@@ -1,7 +1,9 @@
 package main
 
-import "github.com/tiket/TIX-HOTEL-INVENTORY-SCRIPT/cmd"
+import (
+	"github.com/tiket/TIX-HOTEL-INVENTORY-SCRIPT/hotel_core/nib_facility"
+)
 
 func main() {
-	cmd.Execute()
+	nib_facility.RunScript()
 }
